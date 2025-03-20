@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  example-account-api:
+    build:
+      context: ../../
+      args:
+        - SERVICE=account-service
+      target: production
+    container_name: example-account-api
+    ports:
+      - 8080:8080
+    environment:
+      - DB_URL=postgres://account:pass123@example-account-db:5432/account?sslmode=disable
+    env_file:
+      - ../../apps/account-service/.env.production
+    volumes:
+      - ../../apps/account-service/migrations:/migrations
+    depends_on:
+      - example-account-db
+    restart: unless-stopped
+    networks:
+      - ${GLOBAL_NETWORK}
+  example-account-db:
+    container_name: example-account-db
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: account
+      POSTGRES_PASSWORD: pass123
+    networks:
+      - ${GLOBAL_NETWORK}

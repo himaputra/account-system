@@ -1,0 +1,5 @@
+version: "3.7"
+
+networks:
+  example-account-network:
+    name: example-account-network
