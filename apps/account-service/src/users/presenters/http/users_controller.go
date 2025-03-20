@@ -46,5 +46,5 @@ func (uc *UsersController) Create(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{"no_rekening": account.Id})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"no_rekening": account.Id})
 }
